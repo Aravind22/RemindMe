@@ -1,0 +1,23 @@
+<div fxLayoutAlign="center center" fxFlexFill class="mainDiv">
+    <mat-card fxFlex='25'>
+        <mat-toolbar color='primary'>Signup</mat-toolbar>
+        <form fxLayoutAlign = 'stretch' fxLayout='column' class="LoginForm">
+            <mat-form-field >
+              <input matInput placeholder="Username" required>
+            </mat-form-field>
+          
+            <mat-form-field >
+                <input matInput type="password" placeholder="Password" required>
+            </mat-form-field>
+
+            <mat-form-field >
+              <input matInput type="password" placeholder="Confirm Password" required>
+            </mat-form-field>
+
+            <mat-checkbox>I agree to Terms and Conditions</mat-checkbox><br/>
+            <button mat-raised-button type="submit">Signup</button><br/>
+            <p style="text-align: center;">Click <a style="color: blue;" routerLink='/login' routerLinkActive='Active'>here</a> to login</p>
+            <mat-spinner [mode]="'indeterminate'" [diameter]="25" style="margin:0 auto;" *ngIf="show"></mat-spinner>
+          </form>
+    </mat-card>
+</div>
