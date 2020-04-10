@@ -1,6 +1,9 @@
-<div fxLayoutAlign="center center" fxFlexFill class="mainDiv">
+<div fxLayoutAlign="center center" fxFlexFill class="mainDiv background">
     <mat-card fxFlex='25'>
-        <mat-toolbar color='primary'>Signup</mat-toolbar>
+      <div class="panel">
+        <h1>remindMe</h1>
+        <h2 style="text-align: center;">Create your account</h2>
+      </div>
         <form fxLayoutAlign = 'stretch' fxLayout='column' class="LoginForm">
             <mat-form-field >
               <input matInput placeholder="Username" required>
@@ -15,9 +18,10 @@
             </mat-form-field>
 
             <mat-checkbox>I agree to Terms and Conditions</mat-checkbox><br/>
-            <button mat-raised-button type="submit">Signup</button><br/>
+            <button mat-raised-button type="submit" class="buttonbg buttonText">Signup</button><br/>
             <p style="text-align: center;">Click <a style="color: blue;" routerLink='/login' routerLinkActive='Active'>here</a> to login</p>
             <mat-spinner [mode]="'indeterminate'" [diameter]="25" style="margin:0 auto;" *ngIf="show"></mat-spinner>
           </form>
     </mat-card>
+    <!-- <span class="footerText" style="color:white ;">Photo by Luke Chesser on Unsplash</span> -->
 </div>

@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDividerModule} from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatCheckboxModule,
     HttpClientModule,
     FormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
