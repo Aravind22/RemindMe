@@ -16,9 +16,34 @@
     background-size: cover;
  }
 
- h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+ h1, h2, h3, .h1, .h2, .h3 {
     font-family: inherit;
     font-weight: 200;
     line-height: 1.1;
     color: #79589f;
+}
+
+h4 {
+    font-family: inherit;
+    font-weight: 200;
+    line-height: 1.1;
+}
+
+#container {
+    display: flex;           /* establish flex container */
+    flex-direction: row;  /* make main axis vertical */
+    justify-content: center; /* center items vertically, in this case */
+    align-items: center;     /* center items horizontally, in this case */
+    height: 300px;
+}
+
+.box {
+    width: 300px;
+    margin: 5px;
+    text-align: center;     /* will center text in <p>, which is not a flex item */
+}
+
+.error{
+    color: red;
+    text-align: center;
 }

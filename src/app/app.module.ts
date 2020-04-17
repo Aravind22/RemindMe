@@ -17,6 +17,10 @@ import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,11 @@ import {MatDividerModule} from '@angular/material/divider';
     HttpClientModule,
     FormsModule,
     MatProgressSpinnerModule,
-    MatDividerModule
+    MatDividerModule,
+    MatListModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

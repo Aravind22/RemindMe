@@ -6,22 +6,23 @@
       </div>
         <form fxLayoutAlign = 'stretch' fxLayout='column' class="LoginForm">
             <mat-form-field >
-              <input matInput placeholder="Username" required>
-            </mat-form-field>
-          
-            <mat-form-field >
-                <input matInput type="password" placeholder="Password" required>
+              <input matInput placeholder="Username" [(ngModel)]="username" required name="username">
             </mat-form-field>
 
             <mat-form-field >
-              <input matInput type="password" placeholder="Confirm Password" required>
+                <input matInput type="password" placeholder="Password" [(ngModel)]="password" required minlength="8" name="password">
             </mat-form-field>
 
-            <mat-checkbox>I agree to Terms and Conditions</mat-checkbox><br/>
-            <button mat-raised-button type="submit" class="buttonbg buttonText">Signup</button><br/>
+            <mat-form-field >
+              <input matInput type="password" placeholder="Confirm Password" [(ngModel)]="cpassword" required minlength="8" name="cpassword">
+            </mat-form-field>
+
+            <mat-checkbox [(ngModel)]="checked" name="checked">I agree to Terms and Conditions</mat-checkbox><br/>
+            <button mat-raised-button type="submit" class="buttonbg buttonText" (click)="signup()" >Signup</button><br/>
+            <p style="color: red;" *ngIf="errors"> {{errors}}</p>
             <p style="text-align: center;">Click <a style="color: blue;" routerLink='/login' routerLinkActive='Active'>here</a> to login</p>
             <mat-spinner [mode]="'indeterminate'" [diameter]="25" style="margin:0 auto;" *ngIf="show"></mat-spinner>
-          </form>
+        </form>
     </mat-card>
     <!-- <span class="footerText" style="color:white ;">Photo by Luke Chesser on Unsplash</span> -->
 </div>

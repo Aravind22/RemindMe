@@ -26,4 +26,28 @@ export class BackendRepoService {
       }
     ))
   }
+
+  reminder_create(date,user, message){
+    return this.http.post(this.BASE_URL + "/api/" +user+ "/add_date", {date, message}).pipe(map(
+      (res) => {
+        return res;
+      }
+    ))
+  }
+
+  reminder_getAll(user){
+    return this.http.post(this.BASE_URL + '/api/' +user+ "/get_reminders", {user}).pipe(map(
+      (res) => {
+        return res;
+      }
+    ))
+  }
+
+  reminder_delete(user, message){
+    return this.http.post(this.BASE_URL + "/api/" +user+ "/delete_reminder/" +message, {user,message}).pipe(map(
+      (res) => {
+        return res;
+      }
+    ))
+  }
 }

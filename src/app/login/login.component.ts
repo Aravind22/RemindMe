@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
       var msg = JSON.parse(JSON.stringify(data))
       if(msg.message.includes('Successfully')){
         this.show = false
+        localStorage.setItem("user", this.username);
         this.route.navigate(['/home'])
       }
     })

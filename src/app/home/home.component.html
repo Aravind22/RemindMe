@@ -1,20 +1,67 @@
 <div>
-<mat-toolbar style="background-color: rgba(0,0,0,0.0);" mat-elevation-z2>
-    <mat-toolbar-row>
-        <h1>RemindMe</h1>
-        <h1 style="margin-left: 20px;">Create Reminder</h1>
-        <h1 style="margin-left: 20px;">My Reminders</h1>
-        <span class="example-fill-remaining-space"></span>
-        <h1>logout</h1>
-    </mat-toolbar-row>
-</mat-toolbar>
-<mat-divider></mat-divider>
+    <mat-toolbar style="background-color: rgba(0,0,0,0.0);" mat-elevation-z2>
+        <mat-toolbar-row>
+            <h1>RemindMe</h1>
+            <span class="example-fill-remaining-space"></span>
+            <h1 (click)="logout()"> <a href="" style="text-decoration: none;">Logout</a></h1>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
 </div>
-<div fxLayout="row wrap">
-    <mat-card fxLayoutAlign="space-around center">
-        <h1>remindMe</h1>
-    </mat-card>
-    <mat-card fxLayoutAlign="space-around center">
-        <h1>remindMe</h1>
-    </mat-card>
+<div class="container">
+    <div fxLayout="row">
+        <mat-card class="box">
+            <h1>Create Reminder</h1>
+            <form fxLayoutAlign='stretch' fxLayout='column'>
+                <mat-form-field>
+                  <!-- <input matInput placeholder="Date" [(ngModel)]="date" name="date" required> -->
+                  <mat-label>Date</mat-label>
+                  <select required matNativeControl [(ngModel)]="date" name="date">
+                    <option *ngFor="let d of date_Select">{{d}}</option>
+                  </select>
+                </mat-form-field>
+          
+                <mat-form-field>
+                  <mat-label>Month</mat-label>
+                  <select required matNativeControl [(ngModel)]="month" name="month">
+                    <option *ngFor="let m of month_Select">{{m.month}}</option>
+                  </select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Message" [(ngModel)]="message" name="message" required>
+                </mat-form-field>
+          
+                <button mat-raised-button (click)='create_reminder()' class="buttonbg buttonText">Create</button><br />
+                <mat-spinner [mode]="'indeterminate'" [diameter]="25" style="margin:0 auto;" *ngIf="create_show"></mat-spinner>
+                <p class="error" *ngIf="ErrorClass">All Fields are mandatory!</p>
+              </form>
+        </mat-card>
+        <mat-card class="box">
+            <h1>My Reminders</h1>
+            <mat-spinner [mode]="'indeterminate'" [diameter]="25" style="margin:0 auto;" *ngIf="show"></mat-spinner>
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let date of dateArr; let i=index;">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Date
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{date}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-list>
+                        <mat-list-item *ngFor="let msg of msgArr[i]">
+                            {{msg}}
+                            <span class="example-fill-remaining-space"></span>
+                            <button mat-button (click)="delete_reminder(msg)"><mat-icon style="color: red;">clear</mat-icon></button> <br/>
+                        </mat-list-item>
+                    </mat-list>
+                    <mat-spinner [mode]="'indeterminate'" [diameter]="25" style="margin:0 auto;" *ngIf="delete_show"></mat-spinner>
+                </mat-expansion-panel>
+                <p> {{rem_val}} </p>
+            </mat-accordion>
+            <p *ngIf="deleteMsg">Reminder deleted</p>
+        </mat-card>
+    </div>
 </div>
