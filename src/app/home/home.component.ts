@@ -17,8 +17,11 @@ export class HomeComponent implements OnInit {
   user: String;
   dateArr: any;
   msgArr: String[];
+  typeArr:any = [];
+  statusArr:any = [];
   data:any;
   show:boolean = true;
+  cshow:boolean = true;
   create_show:boolean = false;
   showmsg:boolean = false;
   date_Select:any = []
@@ -93,15 +96,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = localStorage.getItem("user")
-    this.getAllReminders()
     this.generate_data()
+    this.getAllCapsules()
+    this.getAllReminders()
   }
 
   getAllReminders(){
-    this.show = true;
     this.api.reminder_getAll(this.user).subscribe(data => {
       var dat = JSON.parse(JSON.stringify(data))
-      console.log(dat)
       if(dat.date){
         this.show = false;
         this.dateArr = data["date"];  
@@ -110,6 +112,22 @@ export class HomeComponent implements OnInit {
         this.rem_val = dat.message
         this.show = false
       }
+    })
+  }
+
+  getAllCapsules(){
+    this.api.capsule_getAll(this.user).subscribe(data => {
+      if(data["type"]){
+        this.typeArr.push("Permanent")
+      }else{
+        this.typeArr.push("Temporary")
+      }
+      if(data["status"]){
+        this.statusArr.push("Active")
+      }else{
+        this.statusArr.push("Available")
+      }
+      this.cshow = false
     })
   }
 
@@ -125,7 +143,8 @@ export class HomeComponent implements OnInit {
       this.ErrorClass = true;
     }else{
       var month_index = this.month_Select.findIndex(obj => obj.month === this.month)
-      this.date = this.date + "/" + this.month_Select[month_index].index;
+      let new_date = ("0"+this.date).slice(-2)
+      this.date = new_date + "/" + this.month_Select[month_index].index;
       this.api.reminder_create(this.date, this.user, this.message).subscribe(data => {
         var msg = JSON.parse(JSON.stringify(data))
         if(msg.message.includes("updated")){  

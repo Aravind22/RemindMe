@@ -14,6 +14,7 @@ export class SignupComponent implements OnInit {
   username: string = null
   password: string = null
   cpassword: string = null
+  number: string = null
   checked: boolean = false;
   errors: string;
 
@@ -42,7 +43,7 @@ export class SignupComponent implements OnInit {
   signup(){
     if (this.validate_form()) {
       this.show = true;
-      this.api.signup(this.username, this.password).subscribe(data => {
+      this.api.signup(this.username, this.password, this.number).subscribe(data => {
         var msg = JSON.parse(JSON.stringify(data))
         if(msg.message.toString().includes("successfully")){
           this.errors = null;

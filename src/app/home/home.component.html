@@ -63,5 +63,17 @@
             </mat-accordion>
             <p *ngIf="deleteMsg">Reminder deleted</p>
         </mat-card>
+        <mat-card class="box">
+            <h1>My Capsules</h1>
+            <mat-spinner [mode]="'indeterminate'" [diameter]="25" style="margin:0 auto;" *ngIf="cshow"></mat-spinner>
+            <mat-list>
+                <mat-list-item *ngFor = "let type of typeArr">
+                    type:{{type}}
+                    <mat-list-item *ngFor = "let status of statusArr">
+                        Status:{{status}}
+                    </mat-list-item>
+                </mat-list-item>
+            </mat-list>
+        </mat-card>
     </div>
 </div>

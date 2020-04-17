@@ -19,8 +19,8 @@ export class BackendRepoService {
     ))
   }
 
-  signup(email, password){
-    return this.http.post(this.BASE_URL + '/api/user/signup', {email, password}).pipe(map(
+  signup(email, password, number){
+    return this.http.post(this.BASE_URL + '/api/user/signup', {email, password, number}).pipe(map(
       (res) => {
         return res;
       }
@@ -37,6 +37,14 @@ export class BackendRepoService {
 
   reminder_getAll(user){
     return this.http.post(this.BASE_URL + '/api/' +user+ "/get_reminders", {user}).pipe(map(
+      (res) => {
+        return res;
+      }
+    ))
+  }
+
+  capsule_getAll(user){
+    return this.http.post(this.BASE_URL + '/api/' +user+ '/get_capsules', {user}).pipe(map(
       (res) => {
         return res;
       }
