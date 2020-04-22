@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendRepoService } from '../backend-repo.service'
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-home',
@@ -8,25 +9,27 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
   constructor(private api: BackendRepoService, private router: Router) { }
 
+  now = moment().format('YYYY-MM-DD');
   date: any;
   month: String;
   message: String;
   user: String;
   dateArr: any;
   msgArr: String[];
-  typeArr:any = [];
-  statusArr:any = [];
-  data:any;
-  show:boolean = true;
-  cshow:boolean = true;
-  create_show:boolean = false;
-  showmsg:boolean = false;
-  showlogout:boolean = false;
-  date_Select:any = []
-  month_Select:any = [ 
+  typeArr: any = [];
+  statusArr: any = [];
+  data: any;
+  show: boolean = true;
+  cshow: boolean = true;
+  create_show: boolean = false;
+  showmsg: boolean = false;
+  showlogout: boolean = false;
+  errMsg: String;
+  date_Select: any = []
+  SuccessClass:boolean = false;
+  month_Select: any = [
     {
       index: '1',
       month: 'January',
@@ -90,10 +93,10 @@ export class HomeComponent implements OnInit {
 
   ];
   ErrorClass: boolean = false;
-  rem_val:any=[];
+  rem_val: any = [];
   delete_show: boolean = false;
   deleteMsg: boolean = false;
-  
+
 
   ngOnInit(): void {
     this.user = localStorage.getItem("user")
@@ -102,12 +105,12 @@ export class HomeComponent implements OnInit {
     this.getAllReminders()
   }
 
-  getAllReminders(){
+  getAllReminders() {
     this.api.reminder_getAll(this.user).subscribe(data => {
       var dat = JSON.parse(JSON.stringify(data))
-      if(dat.date){
+      if (dat.date) {
         this.show = false;
-        this.dateArr = data["date"];  
+        this.dateArr = data["date"]
         this.msgArr = data["message"]
       } else {
         this.rem_val = dat.message
@@ -116,51 +119,57 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  getAllCapsules(){
+  getAllCapsules() {
     this.api.capsule_getAll(this.user).subscribe(data => {
-      if(data["type"]){
+      if (data["type"]) {
         this.typeArr.push("Permanent")
-      }else{
+      } else {
         this.typeArr.push("Temporary")
       }
-      if(data["status"]){
+      if (data["status"]) {
         this.statusArr.push("Active")
-      }else{
+      } else {
         this.statusArr.push("Available")
       }
       this.cshow = false
     })
   }
 
-  generate_data(){
-    for(let i=1;i<32;i++){
+  generate_data() {
+    for (let i = 1; i < 32; i++) {
       this.date_Select.push(i)
     }
   }
 
-  async create_reminder(){
+  async create_reminder() {
     this.create_show = true
-    if(this.message == undefined || this.date == undefined || this.month == undefined){
+    if (this.message == undefined || this.date == undefined) {
       this.ErrorClass = true;
-    }else{
-      var month_index = this.month_Select.findIndex(obj => obj.month === this.month)
-      let new_date = ("0"+this.date).slice(-2)
-      this.date = new_date + "/" + this.month_Select[month_index].index;
+      this.create_show = false
+      this.errMsg = "All Fields are mandatory!"
+    } else if (this.date < this.now) {
+      this.ErrorClass = true;
+      this.create_show = false;
+      this.errMsg = "Date can't be in past!"
+    } else {
       this.api.reminder_create(this.date, this.user, this.message).subscribe(data => {
         var msg = JSON.parse(JSON.stringify(data))
-        if(msg.message.includes("updated")){  
+        if (msg.message.includes("updated")) {
           this.create_show = false;
-          window.location.reload()
+          this.show = true;
+          this.SuccessClass = true
+          this.errMsg = "Reminder created"
+          this.getAllReminders()
         }
       })
     }
   }
 
-  delete_reminder(msg){
+  delete_reminder(msg,date) {
     this.delete_show = true
-    this.api.reminder_delete(this.user, msg).subscribe(data => {
+    this.api.reminder_delete(this.user, msg, date).subscribe(data => {
       var delMsg = JSON.parse(JSON.stringify(data))
-      if(delMsg.message.includes("deleted!")){
+      if (delMsg.message.includes("deleted!")) {
         this.delete_show = false;
         window.location.reload()
         this.deleteMsg = true
@@ -168,11 +177,11 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  logout(){
+  logout() {
     this.showlogout = true
     this.api.logout().subscribe(data => {
       var Msg = JSON.parse(JSON.stringify(data))
-      if(Msg.message.includes("Successfully")){
+      if (Msg.message.includes("Successfully")) {
         this.showlogout = false
         localStorage.removeItem('user')
         localStorage.removeItem('access_token')

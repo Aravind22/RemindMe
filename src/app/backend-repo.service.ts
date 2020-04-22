@@ -64,12 +64,12 @@ export class BackendRepoService {
     ))
   }
 
-  reminder_delete(user, message){
+  reminder_delete(user, message, date){
     const httpOptions = {
       headers: new HttpHeaders()
         .set('Authorization',  'Bearer ' +localStorage.getItem('access_token'))
     }
-    return this.http.post(this.BASE_URL + "/api/" +user+ "/delete_reminder/" +message, {user,message}, httpOptions).pipe(map(
+    return this.http.post(this.BASE_URL + "/api/" +user+ "/delete_reminder/" +date+"/"+message, {user,message}, httpOptions).pipe(map(
       (res) => {
         return res;
       }
