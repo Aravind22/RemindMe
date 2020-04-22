@@ -9,7 +9,7 @@
 <mat-divider></mat-divider>
 <div fxFlexFill class="background">
     <mat-spinner [mode]="'indeterminate'" [diameter]="50" style="margin:0 auto;" *ngIf="showlogout"></mat-spinner>
-    <div fxLayoutAlign="center center" fxFlexFill fxLayout="row">
+    <div fxLayoutAlign="center center" fxFlexFill fxLayout='row' fxLayout.md='row' fxLayout.sm='column' fxLayout.xs='column'>
         <mat-card fxFlex='25' fxFlex.md='50' fxFlex.sm='50' fxFlex.xs='80' class="box">
             <h1>Create Reminder</h1>
             <form fxLayoutAlign='stretch' fxLayout='column'>
