@@ -21,13 +21,16 @@ import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSelectModule} from '@angular/material/select';
+import { TermsComponent } from './terms/terms.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    HomeComponent
+    HomeComponent,
+    TermsComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatListModule,
     MatIconModule,
     MatExpansionModule,
-    MatSelectModule
+    MatSelectModule,
+    PdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

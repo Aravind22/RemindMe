@@ -22,7 +22,7 @@
               <mat-hint>Please do not include county code(+91)</mat-hint>
             </mat-form-field> <br/>           
 
-            <mat-checkbox [(ngModel)]="checked" name="checked">I agree to Terms and Conditions</mat-checkbox><br/>
+            <mat-checkbox [(ngModel)]="checked" name="checked">I agree to <a style="color: blue;" href="/tc">Terms and Conditions</a></mat-checkbox><br/>
             <button mat-raised-button type="submit" class="buttonbg buttonText" (click)="signup()" >Signup</button><br/>
             <p style="color: red;" *ngIf="errors"> {{errors}}</p>
             <p style="text-align: center;">Click <a style="color: blue;" routerLink='/login' routerLinkActive='Active'>here</a> to login</p>

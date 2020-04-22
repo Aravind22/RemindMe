@@ -178,13 +178,13 @@ export class HomeComponent implements OnInit {
   }
 
   logout() {
+    localStorage.removeItem('user')
+    localStorage.removeItem('access_token')
     this.showlogout = true
     this.api.logout().subscribe(data => {
       var Msg = JSON.parse(JSON.stringify(data))
       if (Msg.message.includes("Successfully")) {
         this.showlogout = false
-        localStorage.removeItem('user')
-        localStorage.removeItem('access_token')
         this.router.navigate(['/'])
       }
     })
