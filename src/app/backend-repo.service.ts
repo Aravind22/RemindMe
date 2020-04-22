@@ -8,13 +8,14 @@ import { map } from 'rxjs/operators';
 export class BackendRepoService {
 
   BASE_URL = 'https://tranquil-anchorage-64258.herokuapp.com'
-
   constructor(private http: HttpClient) { }
 
   login(email, password){
     return this.http.post(this.BASE_URL + '/api/user/signin', {email, password}).pipe(map(
       (res) => {
-        return res;
+        var response = JSON.parse(JSON.stringify(res))
+        localStorage.setItem('access_token', response.token)
+        return response.message;
       }
     ))
   }
@@ -28,7 +29,11 @@ export class BackendRepoService {
   }
 
   reminder_create(date,user, message){
-    return this.http.post(this.BASE_URL + "/api/" +user+ "/add_date", {date, message}).pipe(map(
+    const httpOptions = {
+      headers: new HttpHeaders()
+        .set('Authorization',  'Bearer ' +localStorage.getItem('access_token'))
+    }
+    return this.http.post(this.BASE_URL + "/api/" +user+ "/add_date", {date, message}, httpOptions).pipe(map(
       (res) => {
         return res;
       }
@@ -36,7 +41,11 @@ export class BackendRepoService {
   }
 
   reminder_getAll(user){
-    return this.http.post(this.BASE_URL + '/api/' +user+ "/get_reminders", {user}).pipe(map(
+    const httpOptions = {
+      headers: new HttpHeaders()
+        .set('Authorization',  'Bearer ' +localStorage.getItem('access_token'))
+    }
+    return this.http.post(this.BASE_URL + '/api/' +user+ "/get_reminders", {user}, httpOptions).pipe(map(
       (res) => {
         return res;
       }
@@ -44,7 +53,11 @@ export class BackendRepoService {
   }
 
   capsule_getAll(user){
-    return this.http.post(this.BASE_URL + '/api/' +user+ '/get_capsules', {user}).pipe(map(
+    const httpOptions = {
+      headers: new HttpHeaders()
+        .set('Authorization',  'Bearer ' +localStorage.getItem('access_token'))
+    }
+    return this.http.post(this.BASE_URL + '/api/' +user+ '/get_capsules', {user}, httpOptions).pipe(map(
       (res) => {
         return res;
       }
@@ -52,10 +65,32 @@ export class BackendRepoService {
   }
 
   reminder_delete(user, message){
-    return this.http.post(this.BASE_URL + "/api/" +user+ "/delete_reminder/" +message, {user,message}).pipe(map(
+    const httpOptions = {
+      headers: new HttpHeaders()
+        .set('Authorization',  'Bearer ' +localStorage.getItem('access_token'))
+    }
+    return this.http.post(this.BASE_URL + "/api/" +user+ "/delete_reminder/" +message, {user,message}, httpOptions).pipe(map(
       (res) => {
         return res;
       }
     ))
   }
+
+  logout(){
+    const httpOptions = {
+      headers: new HttpHeaders()
+        .set('Authorization',  'Bearer ' +localStorage.getItem('access_token'))
+    }
+    return this.http.post(this.BASE_URL + '/api/logout/', {}, httpOptions).pipe(map(
+      (res)=> {
+        localStorage.removeItem('access_token')
+        return res;
+      }
+    ))
+  }
+
+  check_loggedIn(): boolean{
+    return localStorage.getItem('access_token') !== null
+  }
+
 }

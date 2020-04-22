@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   cshow:boolean = true;
   create_show:boolean = false;
   showmsg:boolean = false;
+  showlogout:boolean = false;
   date_Select:any = []
   month_Select:any = [ 
     {
@@ -97,7 +98,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.user = localStorage.getItem("user")
     this.generate_data()
-    this.getAllCapsules()
+    // this.getAllCapsules()
     this.getAllReminders()
   }
 
@@ -168,8 +169,16 @@ export class HomeComponent implements OnInit {
   }
 
   logout(){
-    localStorage.setItem('user', '')
-    this.router.navigate(['/'])
+    this.showlogout = true
+    this.api.logout().subscribe(data => {
+      var Msg = JSON.parse(JSON.stringify(data))
+      if(Msg.message.includes("Successfully")){
+        this.showlogout = false
+        localStorage.removeItem('user')
+        localStorage.removeItem('access_token')
+        this.router.navigate(['/'])
+      }
+    })
   }
 
 }

@@ -17,6 +17,9 @@ export class LoginComponent implements OnInit {
   constructor(private route: Router, private api: BackendRepoService) { }
 
   ngOnInit(): void {
+    if(this.api.check_loggedIn){
+      this.route.navigate(['/home'])
+    }
   }
 
   navigate_signup(){
@@ -27,8 +30,7 @@ export class LoginComponent implements OnInit {
    this.show = true
    if(this.username != null && this.password != null){
     this.api.login(this.username, this.password).subscribe(data => {
-      var msg = JSON.parse(JSON.stringify(data))
-      if(msg.message.includes('Successfully')){
+      if(data.includes('Successfully')){
         this.show = false
         localStorage.setItem("user", this.username);
         this.route.navigate(['/home'])

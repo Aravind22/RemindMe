@@ -3,11 +3,12 @@
         <mat-toolbar-row>
             <h1>RemindMe</h1>
             <span class="example-fill-remaining-space"></span>
-            <h1 (click)="logout()"> <a href="" style="text-decoration: none;">Logout</a></h1>
+            <h1 (click)="logout()"> <a href="javascript:void(0);" style="text-decoration: none;">Logout</a></h1>
         </mat-toolbar-row>
     </mat-toolbar>
     <mat-divider></mat-divider>
 </div>
+<mat-spinner [mode]="'indeterminate'" [diameter]="50" style="margin:0 auto;" *ngIf="showlogout"></mat-spinner>
 <div class="container">
     <div fxLayout="row">
         <mat-card class="box">
@@ -63,17 +64,17 @@
             </mat-accordion>
             <p *ngIf="deleteMsg">Reminder deleted</p>
         </mat-card>
-        <mat-card class="box">
+        <!-- <mat-card class="box">
             <h1>My Capsules</h1>
             <mat-spinner [mode]="'indeterminate'" [diameter]="25" style="margin:0 auto;" *ngIf="cshow"></mat-spinner>
             <mat-list>
-                <mat-list-item *ngFor = "let type of typeArr">
-                    type:{{type}}
-                    <mat-list-item *ngFor = "let status of statusArr">
-                        Status:{{status}}
-                    </mat-list-item>
-                </mat-list-item>
+                <mat-card *ngFor = "let type of typeArr; let i = index">
+                    <mat-card-content>
+                        <span>{{type}} </span>
+                        <span>{{statusArr[i]}} </span>
+                    </mat-card-content>
+                </mat-card>
             </mat-list>
-        </mat-card>
+        </mat-card> -->
     </div>
 </div>
